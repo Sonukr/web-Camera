@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>HTML5 Demo: getUserMedia (Treehouse Blog)</title>
+  <style>
+      body {
+  background: #F7F7F7;
+  margin: 0;
+  padding: 0;
+}
+
+#video-container {
+  margin: 2em auto 0;
+  width: 500px;
+  padding: 2em;
+  background: white;
+  -webkit-box-shadow: 0 1px 10px #D9D9D9;
+  -moz-box-shadow: 0 1px 10px #D9D9D9;
+  -ms-box-shadow: 0 1px 10px #D9D9D9;
+  -o-box-shadow: 0 1px 10px #D9D9D9;
+  box-shadow: 0 1px 10px #D9D9D9;
+}
+#camera-stream {
+  -webkit-filter: sepia(1);
+
+}
+  </style>
+</head>
+<body>
+  <div id="video-container">
+    filters
+    <select name="one" id="">
+      <option value="saturate(3)">saturate</option>
+      <option value="opacity(0.3)">opacity</option>
+      <option value="sepia(1)">sepia</option>
+      <option value="blur(3px)">blur</option>
+      <option value="grayscale(1)">grayscale</option>
+      <option value="brightness(2.5)">brightness</option>
+      <option value="contrast(5)">contrast</option>
+      <option value="hue-rotate(125deg)">hue-rotate</option>
+      <option value="invert(1)">invert</option>
+    </select>
+    <video id="camera-stream" width="500" autoplay controls></video>
+  </div>
+  <script>
+      window.onload = function() {
+
+        // Normalize the various vendor prefixed versions of getUserMedia.
+        navigator.getUserMedia = (navigator.getUserMedia ||
+                                  navigator.webkitGetUserMedia ||
+                                  navigator.mozGetUserMedia || 
+                                  navigator.msGetUserMedia);
+
+                // Check that the browser supports getUserMedia.
+        // If it doesn't show an alert, otherwise continue.
+        if (navigator.getUserMedia) {
+          // Request the camera.
+          navigator.getUserMedia(
+            // Constraints
+            {
+              video: true
+            },
+
+            // Success Callback
+            function(localMediaStream) {
+                alert()
+                // Get a reference to the video element on the page.
+                var vid = document.getElementById('camera-stream');
+
+                // Create an object URL for the video stream and use this 
+                // to set the video source.
+                vid.src = window.URL.createObjectURL(localMediaStream);
+                video.srcObject = localMediaStream;
+            },
+
+            // Error Callback
+            function(err) {
+              // Log the error to the console.
+              console.log('The following error occurred when trying to use getUserMedia: ' + err);
+            }
+          );
+
+        } else {
+          alert('Sorry, your browser does not support getUserMedia');
+        }
+        var el = document.getElementsByTagName('select')[0]; 
+        el.addEventListener('change',function(e){
+          var value = el.options[el.selectedIndex].value;
+          var text = el.options[el.selectedIndex].text;
+          document.getElementById("camera-stream").style.filter = value;
+        })
+      }
+
+  </script>
+</body>
+</html>
